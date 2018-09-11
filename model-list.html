@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模型管理</title>
+</head>
+<body>
+<div id="top">
+</div>
+<h2>模型列表</h2>
+<hr>
+<a href="javascript:;" onclick="addDesigner()">绘制流程</a>
+<table border="1" id="model-list">
+    <tr>
+        <td>模型编号</td>
+        <td>模型名称</td>
+        <td>版本</td>
+        <td>创建时间</td>
+        <td>操作</td>
+    </tr>
+    <script id="models" type="text/html">
+        <tr>
+            <td>模型编号</td>
+            <td>模型名称</td>
+            <td>版本</td>
+            <td>创建时间</td>
+            <td>操作</td>
+        </tr>
+        {{each rows.list}}
+        <tr>
+            <td>{{$value.id}}</td>
+            <td>{{$value.name}}</td>
+            <td>{{$value.version}}</td>
+            <td>{{$value.createTime}}</td>
+            <td>
+                <a href="javascript:;" onclick="editDesigner({{$value.id}})">编辑</a>
+                <a href="javascript:;" onclick="deleteDesiginer({{$value.id}})">删除</a>
+                <a href="javascript:;" onclick="deploymentDesiginer({{$value.id}})">发布</a>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
+</table>
+<hr>
+<h2>部署列表</h2>
+<hr>
+<table border="1" id="deployment-list">
+    <tr>
+        <td>编号</td>
+        <td>名称</td>
+        <td>部署时间</td>
+        <td>操作</td>
+    </tr>
+    <script id="deployments" type="text/html">
+        <tr>
+            <td>编号</td>
+            <td>名称</td>
+            <td>部署时间</td>
+            <td>操作</td>
+        </tr>
+    {{each rows.list}}
+    <tr>
+        <td>{{$value.id}}</td>
+        <td>{{$value.name}}</td>
+        <td>{{$value.deploymentTime}}</td>
+        <td><a href="javascript:;" onclick="deleteDeploy({{$value.id}})">删除</a></td>
+    </tr>
+    {{/each}}
+    </script>
+</table>
+<script src="./lib/js/jquery-1.10.2.min.js"></script>
+<script src="./lib/js/jquery.cookie.js"></script>
+<script src="./js/ajax-util.js"></script>
+<script src="./lib/js/template.js"></script>
+<script src="./js/config.js"></script>
+
+<script>
+var apiUrl = window.appConfig.apiUrl;
+
+$(function() {
+    AJAX.GET(
+        `${apiUrl}/models`,
+        null,
+        function (result) {
+            var html = template("models", result);
+            $("#model-list").html(html);
+        });
+
+    AJAX.GET(
+        `${apiUrl}/deployments`,
+        null,
+        function (result) {
+            var html = template("deployments", result);
+            $("#deployment-list").html(html);
+        });
+})
+
+function addDesigner() {
+    AJAX.POST(`${apiUrl}/models/newModel`);
+}
+
+function editDesigner(id) {
+    window.open(`/modeler.html?modelId=${id}`);
+}
+
+function deleteDesiginer(id) {
+    AJAX.DELETE(`${apiUrl}/models/${id}`);
+}
+
+function deploymentDesiginer(id) {
+    AJAX.POST(`${apiUrl}/models/${id}/deployment`);
+}
+
+function deleteDeploy(id) {
+    AJAX.DELETE(`${apiUrl}/deployments/${id}`);
+}
+
+</script>
+</body>
+</html>
