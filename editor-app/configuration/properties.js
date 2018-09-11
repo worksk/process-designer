@@ -40,7 +40,7 @@ KISBPM.PROPERTY_CONFIG =
         "readModeTemplateUrl": "editor-app/configuration/properties/form-properties-display-template.html",
         "writeModeTemplateUrl": "editor-app/configuration/properties/form-properties-write-template.html"
     },
-    "oryx-participants-multiplecomplex": { // 参与人员
+    "oryx-participants-multiplecomplex": { // 参与人员11
         "readModeTemplateUrl": "editor-app/configuration/properties/participants-display-template.html",
         "writeModeTemplateUrl": "editor-app/configuration/properties/text-property-write-template.html",
         // "writeModeTemplateUrl": "editor-app/configuration/properties/participants-write-template.html"
