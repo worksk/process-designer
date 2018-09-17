@@ -28,14 +28,15 @@ var activitiModeler = angular.module('activitiModeler', [
   'ngGrid',
   'ngAnimate',
   'pascalprecht.translate',
-  'duScroll'
+  'duScroll',
+  'ivh.treeview'
 ]);
 
 var activitiModule = activitiModeler;
 
 activitiModeler
   // Initialize routes
-  .config(['$selectProvider', '$translateProvider', function ($selectProvider, $translateProvider) {
+  .config(['$selectProvider', '$translateProvider', 'ivhTreeviewOptionsProvider', function ($selectProvider, $translateProvider, ivhTreeviewOptionsProvider) {
 
       // Override caret for bs-select directive
       angular.extend($selectProvider.defaults, {
@@ -52,6 +53,22 @@ activitiModeler
 
         // remember language
         $translateProvider.useCookieStorage();
+
+        ivhTreeviewOptionsProvider.set({
+            idAttribute: 'id',
+            labelAttribute: 'label',
+            childrenAttribute: 'children',
+            selectedAttribute: 'selected',
+            useCheckboxes: true,
+            disableCheckboxSelectionPropagation: true,
+            indeterminateAttribute: '__ivhTreeviewIndeterminate',
+            expandedAttribute: '__ivhTreeviewExpanded',
+            defaultSelectedState: false,
+            validate: true,
+            twistieCollapsedTpl: '<span class="glyphicon glyphicon-chevron-right"></span>',
+            twistieExpandedTpl: '<span class="glyphicon glyphicon-chevron-down"></span>',
+            twistieLeafTpl: '&#9679;'
+          });
         
   }])
   .run(['$rootScope', '$timeout', '$modal', '$translate', '$location', '$window', '$http', '$q',
@@ -209,14 +226,24 @@ activitiModeler
 	                jQuery(window).resize(function () {
 
 	                    // Calculate the offset based on the bottom of the module header
-	                    var offset = jQuery("#editor-header").offset();
+                        var offset = jQuery("#editor-header").offset();
 	                    var propSectionHeight = jQuery('#propertySection').height();
-	                    var canvas = jQuery('#canvasSection');
-	                    var mainHeader = jQuery('#main-header');
+                        var canvas = jQuery('#canvasSection');
 
-	                    if (offset == undefined || offset === null
+                        // by hlweng
+                        var offsetHeight = jQuery("#editor-header").height();
+                        
+                        // by hlweng
+                        // var mainHeader = jQuery('#main-header');
+                        
+	                    // if (offset == undefined || offset === null
+	                    //     || propSectionHeight === undefined || propSectionHeight === null
+	                    //     || canvas === undefined || canvas === null || mainHeader === null) {
+	                    //     return;
+                        // }
+                        if (offset == undefined || offset === null
 	                        || propSectionHeight === undefined || propSectionHeight === null
-	                        || canvas === undefined || canvas === null || mainHeader === null) {
+	                        || canvas === undefined || canvas === null) {
 	                        return;
 	                    }
 	                    
@@ -238,8 +265,10 @@ activitiModeler
 	        	            }
 	                	}
 
-	                    var totalAvailable = jQuery(window).height() - offset.top - mainHeader.height() - 21;
-	                    canvas.height(totalAvailable - propSectionHeight);
+                        // by hlweng
+	                    // var totalAvailable = jQuery(window).height() - offset.top - mainHeader.height() - 21;
+                        var totalAvailable = jQuery(window).height() - offsetHeight;
+                        canvas.height(totalAvailable - propSectionHeight);
 	                    jQuery('#paletteSection').height(totalAvailable);
 
 	                    // Update positions of the resize-markers, according to the canvas

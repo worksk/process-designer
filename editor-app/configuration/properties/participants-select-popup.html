@@ -1,0 +1,31 @@
+<div class="modal" aria-hidden="true" ng-controller="KisBpmParticipantsSelectPopupCtrl">
+    <div class="modal-dialog pro-select-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()">&times;</button>
+                <span class="modal-title">选择参与者</span>
+            </div>
+            <div class="modal-body">
+                <!-- <span class="select-pro-title">请选择参与者</span> -->
+                <div class="select-pro-content">
+                    <!-- <div class="select-query">
+                        <input type="text" ng-model="data.queryName" /><button>查询</button>
+                    </div> ivh-treeview-filter="data.queryName"-->
+                    <div
+                        ivh-treeview="data.treeData"
+                        ivh-treeview-id-attribute="'name'"
+                        ivh-treeview-label-attribute="'name'"
+                        ivh-treeview-use-checkboxes="true"
+                        ivh-treeview-expand-to-depth = "2"
+                        ivh-treeview-on-cb-change="selectNode(ivhNode, ivhIsSelected, ivhTree)"
+                    >
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button ng-click="save()" class="btn btn-primary" translate>ACTION.SAVE</button>
+                <button ng-click="close()" class="btn btn-primary btn-cancel" translate>ACTION.CANCEL</button>
+            </div>
+        </div>
+    </div>
+</div>

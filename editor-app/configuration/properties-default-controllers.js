@@ -94,7 +94,8 @@ var KisBpmTextPropertyCtrl = [ '$scope', '$modal', function($scope, $modal) {
 
     var opts = {
         template:  'editor-app/configuration/properties/text-popup.html?version=' + Date.now(),
-        scope: $scope
+        scope: $scope,
+        backdrop: 'static'
     };
 
     // Open the dialog

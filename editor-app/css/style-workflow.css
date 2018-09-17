@@ -1,0 +1,170 @@
+/* 参与者页面样式 */
+.participant-head {
+	margin-bottom: 5px;
+	font-size: 14px;
+}
+.participant-head a {
+	float: right;
+	margin-right: 5px;
+}
+.participant-body {
+	font-size: 14px;
+}
+.participant-body table {
+	table-layout: fixed;
+	width: 100%;
+	border: 0;
+}
+
+.participant-body thead {
+	background-color: #4C97EC;
+    color: #fff;
+}
+.participant-body td, .participant-body th {
+	padding: 5px 8px;
+	border: 1px solid #ccc;
+}
+.participant-head a:hover, .participant-body a:hover {
+	text-decoration: underline;
+}
+
+/* with e.g. keyframe animations */
+.ivh-treeview-node.ng-enter {
+	animation: my-enter-animation 0.5s linear;
+  }
+  
+  .ivh-treeview-node.ng-leave {
+	animation: my-leave-animation 0.5s linear;
+  }
+  
+  /* or class based animations */
+  .ivh-treeview-node.ng-hide {
+	transition: 0.5s linear all;
+	opacity: 1;
+  }
+  
+  /* alternatively, just strike-through filtered out nodes */
+  .ivh-treeview-node.ng-hide {
+	display: block !important;
+  }
+  
+  .ivh-treeview-node.ng-hide .ivh-treeview-node-label {
+	color: red;
+	/* text-decoration: line-through; */
+  }
+
+/* 参与者页面样式end */
+
+/* Dialog */
+.modal-content {
+    border-radius: 3px;
+}
+.modal .modal-header {
+    padding: .8em 1.5em;
+    min-height: 45px;
+    background: #3a97f4;
+    color: #fff;
+    border: 0;
+    font-size: .9em;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.modal-header span {
+    font-size: 1.25em;
+}
+.modal-header .close {
+    float: right;
+    margin-top: 0;
+    padding: 0;
+    color: #fff;
+    font-size: 1.25em;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid transparent;
+    text-shadow: none;
+    opacity: 1;
+}
+.modal-footer {
+    padding: 20px;
+    margin: 0;
+    border: 0;
+    text-align: center;
+}
+.modal-footer .btn {
+    display: inline-block;
+    padding: .4em 1.5em;
+    margin-right: 30px;
+    text-shadow: none;
+    border-radius: 3px;
+    color: #fff;
+    outline: 0;
+    -webkit-transition: background-color .2s;
+    transition: background-color .2s;
+    text-align: center;
+    overflow: visible;
+    line-height: 1.25;
+    text-decoration: none;
+    cursor: pointer;
+}
+.modal-footer .btn-primary {
+    background-color: #3a97f3;
+    border: 1px solid #3a97f3;
+}
+.modal-footer .btn-cancel{
+    background-color: #96b6d6;
+    border: 1px solid #96b6d6;
+ }
+ .modal-footer .btn-primary:hover{
+    background-color: #2b87e2;
+    border: 1px solid #2b87e2;
+}
+.modal-footer .btn-cancel:hover {
+    background-color: #7592af;
+    border: 1px solid #7592af;
+}
+
+.pro-select-dialog {
+    width: 300px;
+}
+.pro-select-dialog .modal-body {
+    margin: 10px 30px 0;
+    min-height: 260px;
+    border: 1px solid #ccc;
+    overflow: auto;
+}
+/* Dialog end */
+
+.wrapper.full {
+    padding: 0;
+}
+div.propertySection {
+    height: 300px;
+}
+.selected-item-body {
+    padding-bottom: 30px;
+}
+
+.property-row > span {
+    height: 28px;
+    line-height: 28px;
+}
+
+.subheader {
+    background-color: #fff;
+}
+.editor-toolbar .btn.btn-inverse {
+    background: none;
+    color: #737689;
+}
+.editor-toolbar .btn.btn-inverse:hover {
+    color: #4C97EC;
+}
+.editor-toolbar .btn.btn-inverse.disabled,
+.editor-toolbar .btn.btn-inverse[disabled] {
+    background-color: #fff;
+    color: #73768B;
+    border-color: #fff;
+}
+/* div.propertySection {
+    background-color: rgba(75, 151, 236, 0.2);
+} */

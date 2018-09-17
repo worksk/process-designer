@@ -40,10 +40,10 @@ KISBPM.PROPERTY_CONFIG =
         "readModeTemplateUrl": "editor-app/configuration/properties/form-properties-display-template.html",
         "writeModeTemplateUrl": "editor-app/configuration/properties/form-properties-write-template.html"
     },
-    "oryx-participants-multiplecomplex": { // 参与人员11
+    "oryx-participants-multiplecomplex": { // 参与人员
         "readModeTemplateUrl": "editor-app/configuration/properties/participants-display-template.html",
-        "writeModeTemplateUrl": "editor-app/configuration/properties/text-property-write-template.html",
-        // "writeModeTemplateUrl": "editor-app/configuration/properties/participants-write-template.html"
+        // "writeModeTemplateUrl": "editor-app/configuration/properties/text-property-write-template.html",
+        "writeModeTemplateUrl": "editor-app/configuration/properties/participants-write-template.html"
     },
     "oryx-executionlisteners-multiplecomplex": {
         "readModeTemplateUrl": "editor-app/configuration/properties/execution-listeners-display-template.html",

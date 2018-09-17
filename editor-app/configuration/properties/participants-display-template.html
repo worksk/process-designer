@@ -1,4 +1,4 @@
 
-<span ng-if="!property.noValue">{{property.value|limitTo:30}}</span>
-<span ng-if="!property.noValue && property.value != null && property.value.length > 30">...</span>
-<span ng-if="property.noValue" translate>PROPERTY.PARTICIPANTS.EMPTY</span>
+<span ng-if="property.value.participants.participantName">{{property.value.participants.participantName|limitTo:30}}</span>
+<span title="{{property.value.participants.participantName}}" ng-if="property.value.participants.participantName && property.value.participants.participantName.length > 30">...</span>
+<span ng-if="!property.value.participants.participantName" translate>PROPERTY.PARTICIPANTS.EMPTY</span>

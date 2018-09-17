@@ -1,0 +1,43 @@
+<div class="modal" ng-controller="KisBpmParticipantsPopupCtrl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()">&times;</button>
+			    <span>{{'PROPERTY.PROPERTY.EDIT.TITLE' | translate:property}}</span>
+            </div>
+			<div class="modal-body">
+                <div class="participant-head">
+                    <span>{{'PROPERTY.PARTICIPANTS.TITLE' | translate }}</span>
+                    <a href="javascript:;" ng-click="addPar()" data-toggle="modal" data-target="#selectModal">
+                        {{'PROPERTY.PARTICIPANTS.ADD' | translate}}
+                    </a>
+                    <div ng-if="participants.showAdd" ng-include="'/editor-app/configuration/properties/participants-select-write-template.html'"></div>
+                </div>
+                <div class="participant-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>{{'PROPERTY.PARTICIPANTS.ID' | translate}}</th>
+                                <th>{{'PROPERTY.PARTICIPANTS.NAME' | translate}}</th>
+                                <th>{{'PROPERTY.PARTICIPANTS.TYPE' | translate}}</th>
+                                <th width="60">{{'PROPERTY.PARTICIPANTS.OPERATING' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in participants.participantlist">
+                                <td>{{item.id}}</td>
+                                <td>{{item.name}}</td>
+                                <td>{{item.type}}</td>
+                                <td><a href="javascript:;" ng-click="deletePar(item)">{{'PROPERTY.PARTICIPANTS.DELETE' | translate}}</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+			</div>
+            <div class="modal-footer">
+                <button ng-click="save()" class="btn btn-primary" translate>ACTION.SAVE</button>
+                <button ng-click="close()" class="btn btn-primary btn-cancel" translate>ACTION.CANCEL</button>
+            </div>
+		</div>
+    </div>
+</div>

@@ -3,7 +3,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
-            <h2>{{'MODEL.SAVE.TITLE' | translate}}</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()">&times;</button>
+            <span>{{'MODEL.SAVE.TITLE' | translate}}</span>
         </div>
         <div class="modal-body">
 
@@ -25,9 +26,9 @@
         <div class="modal-footer">
         
         	<div class="pull-right">
-            	<button type="button" class="btn" ng-click="close()" ng-disabled="status.loading" translate>ACTION.CANCEL</button>
             	<button class="btn btn-primary" ng-click="saveAndClose()" ng-disabled="status.loading" ng-show="!error" translate>ACTION.SAVE-AND-CLOSE</button>
             	<button class="btn btn-primary" ng-click="save()" ng-disabled="status.loading" ng-show="!error" translate>ACTION.SAVE</button>
+                <button type="button" class="btn btn-cancel" ng-click="close()" ng-disabled="status.loading" translate>ACTION.CANCEL</button>
             </div>
         
             <div class="pull-right popup-error" ng-if="error && !error.isConflict">

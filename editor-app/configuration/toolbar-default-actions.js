@@ -294,7 +294,6 @@ KISBPM.TOOLBAR = {
 /** Custom controller for the save dialog */
 var SaveModelCtrl = [ '$rootScope', '$scope', '$http', '$route', '$location',
     function ($rootScope, $scope, $http, $route, $location) {
-
     var modelMetaData = $scope.editor.getModelMetaData();
 
     var description = '';
@@ -339,7 +338,6 @@ var SaveModelCtrl = [ '$rootScope', '$scope', '$http', '$route', '$location',
         $scope.status = {
         	loading: true
         };
-        
         modelMetaData.name = $scope.saveDialog.name;
         modelMetaData.description = $scope.saveDialog.description;
 

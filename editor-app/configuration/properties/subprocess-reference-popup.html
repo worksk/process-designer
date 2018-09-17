@@ -4,12 +4,12 @@
         <div class="modal-content">
 			<div class="modal-header">
 			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()">&times;</button>
-			    <h2>
+			    <span>
 			        {{'PROPERTY.SUBPROCESSREFERENCE.TITLE' | translate}}
 			        <span ng-show="selectedSubProcess != null"> - {{selectedSubProcess.name}}</span>
 			        <span ng-show="selectedSubProcess == null"> - {{'PROPERTY.SUBPROCESSREFERENCE.EMPTY' | translate}}</span> 
 			    
-			    </h2>
+				</span>
 			</div>
 			<div class="modal-body">
 			    <div class="detail-group clearfix">
@@ -37,6 +37,7 @@
 			</div>
 			<div class="modal-footer">
 			    <button ng-disabled="state.subprocessError" ng-click="save()" class="btn btn-primary" translate>ACTION.SAVE</button>
+				<button ng-click="close()" class="btn btn-primary btn-cancel" translate>ACTION.CANCEL</button>
 			</div>
 		</div>
 	</div>
