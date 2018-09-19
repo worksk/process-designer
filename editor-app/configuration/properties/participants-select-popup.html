@@ -13,11 +13,9 @@
                     </div> ivh-treeview-filter="data.queryName"-->
                     <div
                         ivh-treeview="data.treeData"
-                        ivh-treeview-id-attribute="'name'"
-                        ivh-treeview-label-attribute="'name'"
-                        ivh-treeview-use-checkboxes="true"
-                        ivh-treeview-expand-to-depth = "2"
+                        ivh-treeview-options="data.treeConfig"
                         ivh-treeview-on-cb-change="selectNode(ivhNode, ivhIsSelected, ivhTree)"
+                        ivh-treeview-on-toggle="toggleNode(ivhNode, ivhIsExpanded, ivhTree)"
                     >
                     </div>
                 </div>

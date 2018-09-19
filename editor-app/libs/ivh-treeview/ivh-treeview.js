@@ -217,16 +217,21 @@ angular.module('ivh.treeview').directive('ivhTreeviewToggle', [function() {
     require: '^ivhTreeview',
     link: function(scope, element, attrs, trvw) {
       var node = scope.node;
-
       element.addClass('ivh-treeview-toggle');
 
       element.bind('click', function() {
-        if(!trvw.isLeaf(node)) {
-          scope.$apply(function() {
+        // if(!trvw.isLeaf(node)) {
+        //   scope.$apply(function() {
+        //     trvw.toggleExpanded(node);
+        //     trvw.onToggle(node);
+        //   });
+        // }
+        scope.$apply(function() {
+          if(!trvw.isLeaf(node)) {
             trvw.toggleExpanded(node);
-            trvw.onToggle(node);
-          });
-        }
+          }
+          trvw.onToggle(node);
+        });
       });
     }
   };

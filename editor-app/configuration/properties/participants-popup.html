@@ -25,9 +25,9 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="item in participants.participantlist">
-                                <td>{{item.id}}</td>
-                                <td>{{item.name}}</td>
-                                <td>{{item.type}}</td>
+                                <td>{{item.nodeId}}</td>
+                                <td>{{item.nodeName}}</td>
+                                <td>{{item.nodeType}}</td>
                                 <td><a href="javascript:;" ng-click="deletePar(item)">{{'PROPERTY.PARTICIPANTS.DELETE' | translate}}</a></td>
                             </tr>
                         </tbody>

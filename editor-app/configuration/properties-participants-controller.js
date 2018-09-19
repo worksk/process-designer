@@ -23,13 +23,6 @@ var KisBpmParticipantsPopupCtrl = [ '$scope', '$rootScope', function($scope, $ro
         $scope.participants = {};
     }
 
-    // 参与者人员列表
-    // if ($scope.participants.participantlist == undefined || $scope.participants.participantlist.length == 0) {
-    // 	$scope.participants.participantlist = [
-    //         {id: 'level21', name:'二级1', type:'业务角色'},
-    //         {id: '1235', name:'业务角色-待办2', type:'业务角色2'}
-    //     ];
-    // }
     // 参与者名称
     if (!$scope.participants.participantName) {
         $scope.participants.participantName = '';
@@ -49,7 +42,7 @@ var KisBpmParticipantsPopupCtrl = [ '$scope', '$rootScope', function($scope, $ro
 
     $scope.deletePar = function(item) {
         $scope.participants.participantlist = $scope.participants.participantlist.filter((val) => {
-            return val.id !== item.id;
+            return val.nodeId !== item.nodeId;
         })
     }
 
@@ -70,7 +63,7 @@ var KisBpmParticipantsPopupCtrl = [ '$scope', '$rootScope', function($scope, $ro
 
     var filterName = function($scope) {
         $scope.participants.participantName = $scope.participants.participantlist.map((item) => {
-            return item.name
+            return item.nodeName
         }).join(',');
     }
 

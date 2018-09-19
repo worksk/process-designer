@@ -12,20 +12,43 @@ var KisBpmParticipantsSelectCtrl = [ '$scope', '$modal', function($scope, $modal
     $modal(opts);
 }];
 
-var KisBpmParticipantsSelectPopupCtrl = [ '$scope', '$rootScope', function($scope, $rootScope) {
-    $scope.data = {treeData: [], initSelectedData: [], selectedData: [], queryName: '', selectedCache: []};
-
+var KisBpmParticipantsSelectPopupCtrl = [ '$scope', '$http', function($scope, $http) {
+    if ($scope.this.participants.participantlist === undefined || $scope.this.participants.participantlist === null) {
+        $scope.this.participants.participantlist = [];
+    }
+    $scope.data = {
+        treeData: [],
+        treeConfig: {
+            idAttribute: 'nodeId',
+            labelAttribute: 'nodeName',
+            expandToDepth: 1
+        },
+        initSelectedData: [],
+        selectedData: [],
+        queryName: '',
+        selectedCache: []
+    };
     $scope.data.initSelectedData = angular.copy($scope.this.participants.participantlist);
     $scope.data.selectedData =  angular.copy($scope.this.participants.participantlist);
     $scope.data.treeData = loadTreeData($scope);
 
     $scope.selectNode = function(ivhNode, ivhIsSelected, ivhTree) {
-        // if (ivhIsSelected) {
-        //     $scope.data.selectedData.push(ivhNode);
-        // } else {
-        //     $scope.data.selectedData = deleteArr($scope.data.selectedData, ivhNode)
-        // } 
         $scope.data.selectedData = getSelectedTree(ivhTree);
+    };
+
+    $scope.toggleNode = function(ivhNode, ivhIsExpanded, ivhTree) {
+        if ((!ivhIsExpanded && ivhNode.children.length) ||
+            (ivhNode.nodeType === 'USER') || ivhNode.clicked) {
+            return false;
+        }
+        // 组织人员
+        if (ivhNode.nodeType === 'ORG') {
+            getUsersByNodeId(KISBPM.URL.getOrgUsers(ivhNode.nodeId), ivhNode, ivhTree, $scope);
+        }
+        // 角色人员
+        if (ivhNode.nodeType === 'ROLE') {
+            getUsersByNodeId(KISBPM.URL.getRoleUsers(ivhNode.nodeId), ivhNode, ivhTree, $scope);
+        }
     };
 
     $scope.close = function() {
@@ -46,29 +69,30 @@ var KisBpmParticipantsSelectPopupCtrl = [ '$scope', '$rootScope', function($scop
         $scope.$hide();
     };
 
+    // 接口异步请求，第一次加载的节点显示有问题，导致第一次点击展开有问题
     function loadTreeData($scope) {
-        var data = [{
-            name: '一级',
-            id: 'level1',
-            children: [{
-                name: '二级1',
-                id: 'level21',
-                children: [{
-                    name: '三级1',
-                    id: 'level31'
-                }, {
-                    name: '三级2',
-                    id: 'level32',
-                }]
-            },{
-                name: '二级2',
-                id: 'level22'
-            }]
+        var resultData = [{
+            nodeId: 'org',
+            nodeName: '组织',
+            children: []
+        }, {
+            nodeId: 'role',
+            nodeName: '角色',
+            children: []
         }];
-
-        setSelectedTree($scope, data);
-
-        return data;
+        Promise.all([
+            $http.get(KISBPM.URL.getOrgTree()),
+            $http.get(KISBPM.URL.getRoleTree())
+        ]).then((data) => {
+            $scope.$apply(function() {
+            resultData[0].children = data[0].data; 
+            resultData[1].children = data[1].data; 
+            setSelectedTree($scope, resultData);
+            });
+        }).catch(error => {
+            console.log('load tree error:' + error);
+        })
+        return resultData;
     }
 
     function getSelectedTree(data) {
@@ -86,33 +110,51 @@ var KisBpmParticipantsSelectPopupCtrl = [ '$scope', '$rootScope', function($scop
 
     function setSelectedTree($scope, treeData) {
         for (let i=0, len=$scope.data.selectedData.length; i<len; i++) {
-            $scope.data.treeData = changeTreeStatus($scope.data.selectedData[i].id, treeData);
+            $scope.data.treeData = changeTreeStatus($scope.data.selectedData[i], treeData);
         }
     }
 
-    function changeTreeStatus(selectedId, treeData) {
+    function changeTreeStatus(selectedData, treeData) {
         for (let i=0, len = treeData.length; i<len; i++) {
-            if(selectedId === treeData[i].id) {
+            if(selectedData.nodeId === treeData[i].nodeId &&
+                selectedData.nodeType === treeData[i].nodeType
+            ) {
                 treeData[i]['selected'] = true;
             }
             if (treeData[i].children) {
-                treeData[i].children = changeTreeStatus(selectedId, treeData[i].children);
+                treeData[i].children = changeTreeStatus(selectedData, treeData[i].children);
             }
         }
         return treeData;
     }
 
-    function deleteArr(arr, item) {
-        let deleteIndex = -1;
-        for (let i=0, len=arr.length; i<len ; i++) {
-            if (arr[i].id === item.id) {
-                deleteIndex = i;
+    function getUsersByNodeId(url, ivhNode, ivhTree, $scope) {
+        return $http.get(url).then(function(data) {
+            ivhNode.children = convertChildren(ivhNode, data);
+            ivhNode.clicked = true;
+        }).then(() => {
+            if (ivhNode.children.length) {
+                // ivhIsExpanded = true;
+                ivhNode.__ivhTreeviewExpanded = true;
+            }
+            setSelectedTree($scope, ivhTree);
+        }).catch(function(error) {
+            console.log('error!' + error);
+        })
+    }
+
+    function convertChildren(ivhNode, data) {
+        ivhNode.children = ivhNode.children ? ivhNode.children : [];
+        // 排除添加相同用户
+        for (let i=0, len=data.data.length; i<len; i++) {
+            let findIndex = ivhNode.children.findIndex((item) => {
+                return item.nodeId === data.data[i].nodeId;
+            })
+            if (findIndex >= 0) {
+                data.data.splice(findIndex, 1);
             }
         }
-        if (deleteIndex > -1) {
-            arr.splice(deleteIndex, 1);
-        }
-        return arr;
+        return ivhNode.children.concat(data.data)
     }
 
 }];

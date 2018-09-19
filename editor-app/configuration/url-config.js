@@ -31,5 +31,21 @@ KISBPM.URL = {
 
     putModel: function(modelId) {
         return ACTIVITI.CONFIG.contextRoot + '/model/' + modelId + '/save';
+    },
+
+    getOrgTree: function() {
+        return ACTIVITI.CONFIG.treeRoot + '/api/workflow/participant/orgtree';
+    },
+
+    getOrgUsers: function(orgId) {
+        return ACTIVITI.CONFIG.treeRoot + '/api/workflow/participant/orgusers?orgId=' + orgId;
+    },
+
+    getRoleTree: function() {
+        return ACTIVITI.CONFIG.treeRoot + '/api/workflow/participant/roletree';
+    },
+
+    getRoleUsers: function(roleId) {
+        return ACTIVITI.CONFIG.treeRoot + '/api/workflow/participant/roleusers?roleId=' + roleId;
     }
 };
