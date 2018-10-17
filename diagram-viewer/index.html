@@ -9,6 +9,8 @@
   <script src="js/jquery/jquery.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/jquery/jquery.progressbar.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/jquery/jquery.asyncqueue.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="../js/app-cfg.js?v=2"></script>
   
   <script src="js/Color.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/Polyline.js" type="text/javascript" charset="utf-8"></script>
@@ -105,10 +107,11 @@ $(document).ready(function(){
       }
     }
   };
-  
-  var baseUrl = window.document.location.protocol + "//" + window.document.location.host + "/";
-  var shortenedUrl = window.document.location.href.replace(baseUrl, "");
-  baseUrl = baseUrl + shortenedUrl.substring(0, shortenedUrl.indexOf("/"));
+  // var baseUrl = window.document.location.protocol + "//" + window.document.location.host + "/";
+  // var shortenedUrl = window.document.location.href.replace(baseUrl, "");
+  // baseUrl = baseUrl + shortenedUrl.substring(0, shortenedUrl.indexOf("/"));
+
+  var baseUrl = ACTIVITI.CONFIG.contextRoot;
   
   ActivitiRest.options = {
     processInstanceHighLightsUrl: baseUrl + "/service/process-instance/{processInstanceId}/highlights?callback=?",

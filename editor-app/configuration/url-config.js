@@ -21,31 +21,31 @@ var KISBPM = KISBPM || {};
 KISBPM.URL = {
 
     getModel: function(modelId) {
-        return ACTIVITI.CONFIG.contextRoot + '/model/' + modelId + '/json';
+        return ACTIVITI.CONFIG.contextRoot + '/service/model/' + modelId + '/json';
     },
 
     getStencilSet: function() {
         // return ACTIVITI.CONFIG.contextRoot + '/editor/stencilset?version=' + Date.now();
-        return '/stencilset.json?version=' + Date.now();
+        return 'stencilset.json?version=' + Date.now();
     },
 
     putModel: function(modelId) {
-        return ACTIVITI.CONFIG.contextRoot + '/model/' + modelId + '/save';
+        return ACTIVITI.CONFIG.contextRoot + '/service/model/' + modelId + '/save';
     },
 
     getOrgTree: function() {
-        return ACTIVITI.CONFIG.treeRoot + '/api/workflow/participant/orgtree';
+        return ACTIVITI.CONFIG.contextRoot + '/api/workflow/participant/orgtree';
     },
 
     getOrgUsers: function(orgId) {
-        return ACTIVITI.CONFIG.treeRoot + '/api/workflow/participant/orgusers?orgId=' + orgId;
+        return ACTIVITI.CONFIG.contextRoot + '/api/workflow/participant/orgusers?orgId=' + orgId;
     },
 
     getRoleTree: function() {
-        return ACTIVITI.CONFIG.treeRoot + '/api/workflow/participant/roletree';
+        return ACTIVITI.CONFIG.contextRoot + '/api/workflow/participant/roletree';
     },
 
     getRoleUsers: function(roleId) {
-        return ACTIVITI.CONFIG.treeRoot + '/api/workflow/participant/roleusers?roleId=' + roleId;
+        return ACTIVITI.CONFIG.contextRoot + '/api/workflow/participant/roleusers?roleId=' + roleId;
     }
 };

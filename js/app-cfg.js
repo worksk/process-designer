@@ -21,6 +21,5 @@
 var ACTIVITI = ACTIVITI || {};
 
 ACTIVITI.CONFIG = {
-	'contextRoot' : 'http://114.55.101.16:9000/service',
-	'treeRoot' : 'http://120.55.240.100:8090'
+	'contextRoot' : 'http://120.55.240.100:8090'
 };

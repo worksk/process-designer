@@ -21,6 +21,10 @@
 var KISBPM = KISBPM || {};
 KISBPM.PROPERTY_CONFIG =
 {
+    "oryx-process_id-read": {
+        "readModeTemplateUrl": "editor-app/configuration/properties/default-value-display-template.html",
+        "writeModeTemplateUrl": "editor-app/configuration/properties/default-value-display-template.html"
+    },
     "string": {
         "readModeTemplateUrl": "editor-app/configuration/properties/default-value-display-template.html",
         "writeModeTemplateUrl": "editor-app/configuration/properties/string-property-write-mode-template.html"

@@ -36,7 +36,8 @@ var activitiModule = activitiModeler;
 
 activitiModeler
   // Initialize routes
-  .config(['$selectProvider', '$translateProvider', 'ivhTreeviewOptionsProvider', function ($selectProvider, $translateProvider, ivhTreeviewOptionsProvider) {
+  .config(['$selectProvider', '$translateProvider', 'ivhTreeviewOptionsProvider', '$httpProvider', 
+  function ($selectProvider, $translateProvider, ivhTreeviewOptionsProvider, $httpProvider) {
 
       // Override caret for bs-select directive
       angular.extend($selectProvider.defaults, {
@@ -69,6 +70,12 @@ activitiModeler
             twistieExpandedTpl: '<span class="glyphicon glyphicon-chevron-down"></span>',
             twistieLeafTpl: '&#9679;'
           });
+
+          $httpProvider.defaults.headers.common = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,HEAD,GET,PUT,POST,DELETE,PATCH',
+            'Authorization': localStorage.getItem('jwt')
+        };
         
   }])
   .run(['$rootScope', '$timeout', '$modal', '$translate', '$location', '$window', '$http', '$q',
@@ -110,12 +117,17 @@ activitiModeler
              */
 
             /* Helper method to fetch model from server (always needed) */
-            function fetchModel(modelId) {
+            function fetchModel(modelId, code) {
 
                 var modelUrl = KISBPM.URL.getModel(modelId);
 
-                $http({method: 'GET', url: modelUrl}).
+                $http({method: 'GET',url: modelUrl}).
                     success(function (data, status, headers, config) {
+                        if (data.model.properties) {
+                            data.model.properties['process_id'] = code;
+                        } else {
+                            data.model.properties = {process_id: code};
+                        }
                         $rootScope.editor = new ORYX.Editor(data);
                         $rootScope.modelData = angular.fromJson(data);
                         $rootScope.editorFactory.resolve();
@@ -196,8 +208,9 @@ activitiModeler
 
 	            	ORYX._loadPlugins();
 	
-	                var modelId = EDITOR.UTIL.getParameterByName('modelId');
-	                fetchModel(modelId);
+                    var modelId = EDITOR.UTIL.getParameterByName('modelId');
+                    var code = EDITOR.UTIL.getParameterByName('code');
+	                fetchModel(modelId, code);
 	
 	                $rootScope.window = {};
 	                var updateWindowSize = function() {
