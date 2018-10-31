@@ -13,8 +13,8 @@ var KisBpmParticipantsSelectCtrl = [ '$scope', '$modal', function($scope, $modal
 }];
 
 var KisBpmParticipantsSelectPopupCtrl = [ '$scope', '$http', function($scope, $http) {
-    if ($scope.this.participants.participantlist === undefined || $scope.this.participants.participantlist === null) {
-        $scope.this.participants.participantlist = [];
+    if ($scope.this.list === undefined || $scope.this.list === null) {
+        $scope.this.list = [];
     }
     $scope.data = {
         treeData: [],
@@ -25,11 +25,12 @@ var KisBpmParticipantsSelectPopupCtrl = [ '$scope', '$http', function($scope, $h
         },
         initSelectedData: [],
         selectedData: [],
+        selectedList: [],
         queryName: '',
         selectedCache: []
     };
-    $scope.data.initSelectedData = angular.copy($scope.this.participants.participantlist);
-    $scope.data.selectedData =  angular.copy($scope.this.participants.participantlist);
+    $scope.data.initSelectedData = angular.copy($scope.this.list);
+    $scope.data.selectedData =  angular.copy($scope.this.list);
     $scope.data.treeData = loadTreeData($scope);
 
     $scope.selectNode = function(ivhNode, ivhIsSelected, ivhTree) {
@@ -53,7 +54,7 @@ var KisBpmParticipantsSelectPopupCtrl = [ '$scope', '$http', function($scope, $h
 
     $scope.close = function() {
         $scope.data.selectedCache = $scope.data.initSelectedData
-        $scope.$emit('$showAddSelectPar', {
+        $scope.$emit('$showAddSelectPop', {
             isShow: false,
             selectedData: $scope.data.selectedCache
         });
@@ -62,7 +63,7 @@ var KisBpmParticipantsSelectPopupCtrl = [ '$scope', '$http', function($scope, $h
 
     $scope.save = function() {
         $scope.data.selectedCache = $scope.data.selectedData
-        $scope.$emit('$showAddSelectPar', {
+        $scope.$emit('$showAddSelectPop', {
             isShow: false,
             selectedData: $scope.data.selectedCache
         });
@@ -85,8 +86,8 @@ var KisBpmParticipantsSelectPopupCtrl = [ '$scope', '$http', function($scope, $h
             $http.get(KISBPM.URL.getRoleTree())
         ]).then((data) => {
             $scope.$apply(function() {
-            resultData[0].children = data[0].data; 
-            resultData[1].children = data[1].data; 
+            resultData[0].children = data[0].data;
+            resultData[1].children = data[1].data;
             setSelectedTree($scope, resultData);
             });
         }).catch(error => {
@@ -99,7 +100,9 @@ var KisBpmParticipantsSelectPopupCtrl = [ '$scope', '$http', function($scope, $h
         var selectedData = [];
         for (let i=0, len = data.length; i<len; i++) {
             if(data[i].selected) {
-                selectedData.push(data[i]);
+                selectedData.push({
+                  nodeId: data[i].nodeId, nodeType: data[i].nodeType, nodeName: data[i].nodeName
+                }); // data[i]
             }
             if (data[i].children) {
                 selectedData = selectedData.concat(getSelectedTree(data[i].children));
